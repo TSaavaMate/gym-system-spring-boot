@@ -33,15 +33,4 @@ public class Trainee {
     @JoinColumn(name = "user_id")
     private User user;
 
-
-
-    @Override
-    public String toString() {
-        return "Trainee{" +
-                "id=" + id +
-                ", dateOfBirth=" + dateOfBirth +
-                ", address='" + address + '\'' +
-                ", user=" + user +
-                '}';
-    }
 }

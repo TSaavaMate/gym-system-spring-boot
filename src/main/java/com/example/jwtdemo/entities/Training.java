@@ -26,18 +26,6 @@ public class Training {
     @NonNull
     private Integer duration;
 
-    @Override
-    public String toString() {
-        return "Training{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", date=" + date +
-                ", duration=" + duration +
-                ", trainee=" + trainee.getUser().getFirstName() +
-                ", trainer=" + trainer +
-                ", trainingType=" + trainingType.getTrainingTypeName() +
-                '}';
-    }
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "trainee_id")

@@ -27,12 +27,4 @@ public class Trainer {
 
     private String specialization;
 
-    @Override
-    public String toString() {
-        return "Trainer{" +
-                "id=" + id +
-                ", user=" + user +
-                ", specialization='" + specialization + '\'' +
-                '}';
-    }
 }
