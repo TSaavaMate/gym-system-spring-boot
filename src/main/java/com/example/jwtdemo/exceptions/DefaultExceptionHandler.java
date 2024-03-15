@@ -9,77 +9,38 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @ControllerAdvice
 public class DefaultExceptionHandler {
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ApiError> handleResourceNotFound(ResourceNotFoundException ex,
-                                                           HttpServletRequest request){
-        var apiError = new ApiError(
-                request.getRequestURI(),
-                ex.getMessage(),
-                HttpStatus.NOT_FOUND.value(),
-                LocalDateTime.now()
-                );
-        return new ResponseEntity<>(apiError,HttpStatus.NOT_FOUND);
-    }
-    @ExceptionHandler(InvalidCredentialException.class)
-    public ResponseEntity<ApiError> handleWrongCredentials(InvalidCredentialException ex,
-                                                           HttpServletRequest request){
-        var apiError = new ApiError(
-                request.getRequestURI(),
-                ex.getMessage(),
-                HttpStatus.UNAUTHORIZED.value(),
-                LocalDateTime.now()
-        );
-        return new ResponseEntity<>(apiError,HttpStatus.UNAUTHORIZED);
-    }
-    @ExceptionHandler(InvalidUpdateRequestException.class)
-    public ResponseEntity<ApiError> handleWrongUpdateRequest(InvalidUpdateRequestException ex,
-                                                             HttpServletRequest request){
-        var apiError = new ApiError(
-                request.getRequestURI(),
-                ex.getMessage(),
-                HttpStatus.BAD_REQUEST.value(),
-                LocalDateTime.now()
-        );
-        return new ResponseEntity<>(apiError,HttpStatus.BAD_REQUEST);
-    }
 
-    @ExceptionHandler(SQLException.class)
-    public ResponseEntity<ApiError> handleSqlException(SQLException ex,
-                                                             HttpServletRequest request){
-        var apiError = new ApiError(
+    private static final Map<Class<? extends Exception>, HttpStatus> EXCEPTION_STATUS_MAP = new HashMap<>();
+
+    static {
+        EXCEPTION_STATUS_MAP.put(ResourceNotFoundException.class, HttpStatus.NOT_FOUND);
+        EXCEPTION_STATUS_MAP.put(InvalidCredentialException.class, HttpStatus.UNAUTHORIZED);
+        EXCEPTION_STATUS_MAP.put(ExpiredJwtException.class, HttpStatus.UNAUTHORIZED);
+        EXCEPTION_STATUS_MAP.put(InvalidUpdateRequestException.class, HttpStatus.BAD_REQUEST);
+        EXCEPTION_STATUS_MAP.put(InvalidTrainingCreationRequest.class, HttpStatus.BAD_REQUEST);
+        EXCEPTION_STATUS_MAP.put(SQLException.class, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler({ ResourceNotFoundException.class,
+                        InvalidCredentialException.class,
+                        InvalidUpdateRequestException.class,
+                        SQLException.class,
+                        InvalidTrainingCreationRequest.class,
+                        ExpiredJwtException.class
+    })
+    public ResponseEntity<ApiError> handleException(Exception ex, HttpServletRequest request) {
+        var status = EXCEPTION_STATUS_MAP.getOrDefault(ex.getClass(), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        ApiError apiError = new ApiError(
                 request.getRequestURI(),
                 ex.getMessage(),
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                status.value(),
                 LocalDateTime.now()
         );
-        return new ResponseEntity<>(apiError,HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(apiError, status);
     }
-
-    @ExceptionHandler(InvalidTrainingCreationRequest.class)
-    public ResponseEntity<ApiError> handleSqlException(InvalidTrainingCreationRequest ex,
-                                                       HttpServletRequest request){
-        var apiError = new ApiError(
-                request.getRequestURI(),
-                ex.getMessage(),
-                HttpStatus.BAD_REQUEST.value(),
-                LocalDateTime.now()
-        );
-        return new ResponseEntity<>(apiError,HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(ExpiredJwtException.class)
-    public ResponseEntity<ApiError> handleExpiredJwtException(ExpiredJwtException ex,
-                                                       HttpServletRequest request){
-        var apiError = new ApiError(
-                request.getRequestURI(),
-                ex.getMessage(),
-                HttpStatus.BAD_REQUEST.value(),
-                LocalDateTime.now()
-        );
-        return new ResponseEntity<>(apiError,HttpStatus.BAD_REQUEST);
-    }
-
 }
