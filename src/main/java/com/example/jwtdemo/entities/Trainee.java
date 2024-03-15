@@ -1,27 +1,21 @@
 package com.example.jwtdemo.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 import java.util.Date;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Trainee {
+public class Trainee extends Person{
     public Trainee(@NonNull Date dateOfBirth, @NonNull String address, User user) {
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.user = user;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @NonNull
     private Date dateOfBirth;
@@ -29,8 +23,5 @@ public class Trainee {
     @NonNull
     private String address;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
 
 }
