@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/trainingType")
+@RequestMapping("/trainingTypes")
 @RequiredArgsConstructor
 public class TrainingTypeController {
 
     private final TrainingTypeService trainingTypeService;
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<TrainingTypeDto>> findAllTrainingTypes(){
         return ResponseEntity.ok(trainingTypeService.findAll());
     }

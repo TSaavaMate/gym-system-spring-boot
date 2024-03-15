@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/trainee")
+@RequestMapping("api/v1/trainees")
 @RequiredArgsConstructor
 public class TraineeController {
 
@@ -30,7 +30,7 @@ public class TraineeController {
         return ResponseEntity.ok(traineeService.findByUsername(username));
     }
 
-    @PostMapping("/update-trainers")
+    @PostMapping("/trainers")
     public ResponseEntity<List<TrainerProfile>> updateTraineeTrainers(@RequestBody UpdateTraineeTrainersRequest request){
         return ResponseEntity.ok(traineeService.updateTraineeTrainers(request));
     }
@@ -38,16 +38,16 @@ public class TraineeController {
     public ResponseEntity<TraineeDto> updateTrainee(@RequestBody UpdateTraineeRequest request) {
         return ResponseEntity.ok(traineeService.update(request));
     }
-    @PatchMapping
+    @PatchMapping("/trainee/state")
     public ResponseEntity<?> updateTraineeState(@RequestBody PatchTraineeRequest request){
         traineeService.setActiveState(request);
         return ResponseEntity.ok().build();
     }
 
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id){
-        traineeService.delete(id);
+    @DeleteMapping("/{traineeId}")
+    public ResponseEntity<String> delete(@PathVariable Long traineeId){
+        traineeService.delete(traineeId);
         return ResponseEntity.ok().build();
     }
 

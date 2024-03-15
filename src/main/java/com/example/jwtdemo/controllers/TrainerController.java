@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/trainer")
+@RequestMapping("api/v1/trainers")
 @RequiredArgsConstructor
 public class TrainerController {
 
@@ -31,7 +31,7 @@ public class TrainerController {
         return ResponseEntity.ok(trainerService.create(request));
     }
 
-    @PatchMapping
+    @PatchMapping("trainer-state")
     public ResponseEntity<?> updateTrainerState(@RequestBody PatchTrainerRequest request){
         trainerService.setActiveState(request);
         return ResponseEntity.ok().build();
@@ -46,9 +46,9 @@ public class TrainerController {
     }
 
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id){
-        trainerService.delete(id);
+    @DeleteMapping("/{trainerId}")
+    public ResponseEntity<String> delete(@PathVariable Long trainerId){
+        trainerService.delete(trainerId);
         return ResponseEntity.ok("deleted");
     }
 
