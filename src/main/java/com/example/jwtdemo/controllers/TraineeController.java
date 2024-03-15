@@ -8,6 +8,7 @@ import com.example.jwtdemo.models.requests.updateRequest.UpdateTrainee;
 import com.example.jwtdemo.models.requests.updateRequest.UpdateTraineeTrainers;
 import com.example.jwtdemo.models.responses.RegistrationResponse;
 import com.example.jwtdemo.services.trainee.TraineeService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class TraineeController {
 
     private final TraineeService traineeService;
 
+    @ApiOperation(value = "create trainee", notes = "This endpoint creates sample trainee.")
     @PostMapping
     public ResponseEntity<RegistrationResponse> create(@RequestBody TraineeRegistration request){
         return ResponseEntity.ok(traineeService.create(request));
