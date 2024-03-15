@@ -3,9 +3,9 @@ package com.example.jwtdemo.auth;
 import com.example.jwtdemo.config.JwtTokenService;
 import com.example.jwtdemo.entities.User;
 import com.example.jwtdemo.exceptions.InvalidCredentialException;
-import com.example.jwtdemo.models.requests.authRequest.AuthenticationRequest;
-import com.example.jwtdemo.models.requests.authRequest.ChangePasswordRequest;
-import com.example.jwtdemo.models.requests.registrationRequest.UserRegistrationRequest;
+import com.example.jwtdemo.models.requests.authRequest.Authentication;
+import com.example.jwtdemo.models.requests.authRequest.ChangePassword;
+import com.example.jwtdemo.models.requests.registrationRequest.UserRegistration;
 import com.example.jwtdemo.models.responses.AuthenticationResponse;
 import com.example.jwtdemo.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class AuthenticateService {
     private final AuthenticationManager authManager;
 
     @Transactional
-    public AuthenticationResponse register(UserRegistrationRequest request) {
+    public AuthenticationResponse register(UserRegistration request) {
 
         String username = credentialConfigurer.generateUniqueUsername(request.getFirstname(), request.getLastname());
         String encoded = passwordEncoder.encode(request.getPassword());
@@ -53,7 +53,7 @@ public class AuthenticateService {
                 .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(Authentication request) {
 
         authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -71,7 +71,7 @@ public class AuthenticateService {
     }
 
     @Transactional
-    public AuthenticationResponse changePasswordAndAuthenticate(ChangePasswordRequest request) {
+    public AuthenticationResponse changePasswordAndAuthenticate(ChangePassword request) {
         var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         String oldPassword = request.getOldPassword();
 

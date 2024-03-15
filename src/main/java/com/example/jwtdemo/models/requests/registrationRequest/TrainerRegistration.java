@@ -9,11 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserRegistrationRequest implements RegistrationRequest {
+public class TrainerRegistration implements Registration {
     private String firstname;
     private String lastname;
-    private String email;
-    private String password;
-    private Boolean IsActive;
-    private String role;
+    private String specialization;
 }

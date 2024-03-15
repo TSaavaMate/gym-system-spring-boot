@@ -2,10 +2,10 @@ package com.example.jwtdemo.controllers;
 
 import com.example.jwtdemo.models.dto.TraineeDto;
 import com.example.jwtdemo.models.profiles.TrainerProfile;
-import com.example.jwtdemo.models.requests.patchRequest.PatchTraineeRequest;
-import com.example.jwtdemo.models.requests.registrationRequest.TraineeRegistrationRequest;
-import com.example.jwtdemo.models.requests.updateRequest.UpdateTraineeRequest;
-import com.example.jwtdemo.models.requests.updateRequest.UpdateTraineeTrainersRequest;
+import com.example.jwtdemo.models.requests.patchRequest.PatchTrainee;
+import com.example.jwtdemo.models.requests.registrationRequest.TraineeRegistration;
+import com.example.jwtdemo.models.requests.updateRequest.UpdateTrainee;
+import com.example.jwtdemo.models.requests.updateRequest.UpdateTraineeTrainers;
 import com.example.jwtdemo.models.responses.RegistrationResponse;
 import com.example.jwtdemo.services.trainee.TraineeService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class TraineeController {
     private final TraineeService traineeService;
 
     @PostMapping
-    public ResponseEntity<RegistrationResponse> create(@RequestBody TraineeRegistrationRequest request){
+    public ResponseEntity<RegistrationResponse> create(@RequestBody TraineeRegistration request){
         return ResponseEntity.ok(traineeService.create(request));
     }
     @GetMapping("/{username}")
@@ -31,15 +31,15 @@ public class TraineeController {
     }
 
     @PostMapping("/trainers")
-    public ResponseEntity<List<TrainerProfile>> updateTraineeTrainers(@RequestBody UpdateTraineeTrainersRequest request){
+    public ResponseEntity<List<TrainerProfile>> updateTraineeTrainers(@RequestBody UpdateTraineeTrainers request){
         return ResponseEntity.ok(traineeService.updateTraineeTrainers(request));
     }
     @PutMapping
-    public ResponseEntity<TraineeDto> updateTrainee(@RequestBody UpdateTraineeRequest request) {
+    public ResponseEntity<TraineeDto> updateTrainee(@RequestBody UpdateTrainee request) {
         return ResponseEntity.ok(traineeService.update(request));
     }
     @PatchMapping("/trainee/state")
-    public ResponseEntity<?> updateTraineeState(@RequestBody PatchTraineeRequest request){
+    public ResponseEntity<?> updateTraineeState(@RequestBody PatchTrainee request){
         traineeService.setActiveState(request);
         return ResponseEntity.ok().build();
     }

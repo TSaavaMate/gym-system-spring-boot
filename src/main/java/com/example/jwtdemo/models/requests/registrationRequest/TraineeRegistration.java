@@ -5,12 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TrainerRegistrationRequest implements RegistrationRequest{
+public class TraineeRegistration implements Registration {
     private String firstname;
     private String lastname;
-    private String specialization;
+    private Date dateOfBirth;
+    private String address;
 }

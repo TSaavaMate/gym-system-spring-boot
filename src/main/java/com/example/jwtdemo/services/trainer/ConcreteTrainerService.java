@@ -6,11 +6,11 @@ import com.example.jwtdemo.entities.User;
 import com.example.jwtdemo.exceptions.ResourceNotFoundException;
 import com.example.jwtdemo.models.dto.TrainerDto;
 import com.example.jwtdemo.models.profiles.TrainerProfile;
-import com.example.jwtdemo.models.requests.patchRequest.PatchTrainerRequest;
-import com.example.jwtdemo.models.requests.registrationRequest.RegistrationRequest;
-import com.example.jwtdemo.models.requests.registrationRequest.TrainerRegistrationRequest;
-import com.example.jwtdemo.models.requests.trainerFilterRequest.ActiveTrainersRequest;
-import com.example.jwtdemo.models.requests.updateRequest.UpdateTrainerRequest;
+import com.example.jwtdemo.models.requests.patchRequest.PatchTrainer;
+import com.example.jwtdemo.models.requests.registrationRequest.Registration;
+import com.example.jwtdemo.models.requests.registrationRequest.TrainerRegistration;
+import com.example.jwtdemo.models.requests.trainerFilterRequest.ActiveTrainers;
+import com.example.jwtdemo.models.requests.updateRequest.UpdateTrainer;
 import com.example.jwtdemo.models.responses.RegistrationResponse;
 import com.example.jwtdemo.repositories.TrainerRepository;
 import com.example.jwtdemo.services.trainer.mapper.TrainerDtoMapper;
@@ -72,7 +72,7 @@ public class ConcreteTrainerService implements TrainerService{
     @Override
     @Loggable
     @Transactional
-    public TrainerDto update(@Validated UpdateTrainerRequest request) {
+    public TrainerDto update(@Validated UpdateTrainer request) {
         var trainer = trainerRepository.findTrainerByUserUsername(request.getUsername())
                 .orElseThrow(() -> {
                     log.warn("not found trainer with username : {}" , request.getUsername());
@@ -104,7 +104,7 @@ public class ConcreteTrainerService implements TrainerService{
     }
 
     @Override
-    public List<TrainerProfile> getActiveTrainers(ActiveTrainersRequest request) {
+    public List<TrainerProfile> getActiveTrainers(ActiveTrainers request) {
         return trainerRepository.findTrainersByUserUsernameAndUserIsActive(request.getUsername(),true).stream()
                 .map(profileMapper)
                 .toList();
@@ -112,7 +112,7 @@ public class ConcreteTrainerService implements TrainerService{
     }
 
     @Override
-    public void setActiveState(PatchTrainerRequest request) {
+    public void setActiveState(PatchTrainer request) {
         var trainer = trainerRepository.findTrainerByUserUsername(request.getUsername())
                 .orElseThrow(ResourceNotFoundException::new);
 
@@ -123,8 +123,8 @@ public class ConcreteTrainerService implements TrainerService{
     }
 
     @Override
-    public RegistrationResponse create(RegistrationRequest request) {
-        var trainer = requestMapper.apply((TrainerRegistrationRequest) request);
+    public RegistrationResponse create(Registration request) {
+        var trainer = requestMapper.apply((TrainerRegistration) request);
 
         trainerRepository.save(trainer);
 

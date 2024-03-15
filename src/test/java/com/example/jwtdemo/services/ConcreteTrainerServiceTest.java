@@ -3,7 +3,7 @@ package com.example.jwtdemo.services;
 import com.example.jwtdemo.entities.Trainer;
 import com.example.jwtdemo.entities.User;
 import com.example.jwtdemo.exceptions.ResourceNotFoundException;
-import com.example.jwtdemo.models.requests.patchRequest.PatchTrainerRequest;
+import com.example.jwtdemo.models.requests.patchRequest.PatchTrainer;
 import com.example.jwtdemo.repositories.TrainerRepository;
 import com.example.jwtdemo.services.trainer.ConcreteTrainerService;
 import com.example.jwtdemo.services.trainer.mapper.TrainerDtoMapper;
@@ -66,7 +66,7 @@ class ConcreteTrainerServiceTest {
         Boolean isActive = true;
         Trainer trainer = new Trainer();
         trainer.setUser(User.builder().build());
-        PatchTrainerRequest request = new PatchTrainerRequest();
+        PatchTrainer request = new PatchTrainer();
         request.setUsername(username);
         request.setIsActive(true);
         when(trainerRepository.findTrainerByUserUsername(username)).thenReturn(Optional.of(trainer));
@@ -80,7 +80,7 @@ class ConcreteTrainerServiceTest {
     @Test
     void testSetActiveState_NonExistentTrainer() {
         String username = "nonexistentUser";
-        PatchTrainerRequest request = new PatchTrainerRequest();
+        PatchTrainer request = new PatchTrainer();
         request.setUsername(username);
         request.setIsActive(true);
         when(trainerRepository.findTrainerByUserUsername(username)).thenReturn(Optional.empty());
@@ -93,7 +93,7 @@ class ConcreteTrainerServiceTest {
         String username = "testUser";
         Trainer trainer = new Trainer();
         trainer.setUser(User.builder().isActive(false).build());
-        PatchTrainerRequest request = new PatchTrainerRequest();
+        PatchTrainer request = new PatchTrainer();
         request.setUsername(username);
         request.setIsActive(true);
         when(trainerRepository.findTrainerByUserUsername(username)).thenReturn(Optional.of(trainer));

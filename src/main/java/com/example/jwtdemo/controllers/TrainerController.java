@@ -2,10 +2,10 @@ package com.example.jwtdemo.controllers;
 
 import com.example.jwtdemo.models.dto.TrainerDto;
 import com.example.jwtdemo.models.profiles.TrainerProfile;
-import com.example.jwtdemo.models.requests.patchRequest.PatchTrainerRequest;
-import com.example.jwtdemo.models.requests.registrationRequest.TrainerRegistrationRequest;
-import com.example.jwtdemo.models.requests.trainerFilterRequest.ActiveTrainersRequest;
-import com.example.jwtdemo.models.requests.updateRequest.UpdateTrainerRequest;
+import com.example.jwtdemo.models.requests.patchRequest.PatchTrainer;
+import com.example.jwtdemo.models.requests.registrationRequest.TrainerRegistration;
+import com.example.jwtdemo.models.requests.trainerFilterRequest.ActiveTrainers;
+import com.example.jwtdemo.models.requests.updateRequest.UpdateTrainer;
 import com.example.jwtdemo.models.responses.RegistrationResponse;
 import com.example.jwtdemo.services.trainer.TrainerService;
 import lombok.RequiredArgsConstructor;
@@ -27,21 +27,21 @@ public class TrainerController {
     }
 
     @PostMapping
-    public ResponseEntity<RegistrationResponse> create(@RequestBody TrainerRegistrationRequest request){
+    public ResponseEntity<RegistrationResponse> create(@RequestBody TrainerRegistration request){
         return ResponseEntity.ok(trainerService.create(request));
     }
 
     @PatchMapping("trainer-state")
-    public ResponseEntity<?> updateTrainerState(@RequestBody PatchTrainerRequest request){
+    public ResponseEntity<?> updateTrainerState(@RequestBody PatchTrainer request){
         trainerService.setActiveState(request);
         return ResponseEntity.ok().build();
     }
     @GetMapping("/active-trainers")
-    public ResponseEntity<List<TrainerProfile>> findActiveTrainers(@RequestBody ActiveTrainersRequest request){
+    public ResponseEntity<List<TrainerProfile>> findActiveTrainers(@RequestBody ActiveTrainers request){
         return ResponseEntity.ok(trainerService.getActiveTrainers(request));
     }
     @PutMapping
-    public ResponseEntity<TrainerDto> updateTrainer(@RequestBody UpdateTrainerRequest request) {
+    public ResponseEntity<TrainerDto> updateTrainer(@RequestBody UpdateTrainer request) {
         return ResponseEntity.ok(trainerService.update(request));
     }
 

@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class UpdateTraineeTrainersRequest {
+public class UpdateTraineeTrainers {
     private String traineeUsername;
     private List<String> trainers;
 }

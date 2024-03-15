@@ -2,9 +2,9 @@ package com.example.jwtdemo.controllers;
 
 import com.example.jwtdemo.models.dto.TraineeTrainingDto;
 import com.example.jwtdemo.models.dto.TrainerTrainingDto;
-import com.example.jwtdemo.models.requests.registrationRequest.TrainingRegistrationRequest;
-import com.example.jwtdemo.models.requests.trainingFilterRequest.TraineeTrainingRequest;
-import com.example.jwtdemo.models.requests.trainingFilterRequest.TrainerTrainingRequest;
+import com.example.jwtdemo.models.requests.registrationRequest.TrainingRegistration;
+import com.example.jwtdemo.models.requests.trainingFilterRequest.TraineeTraining;
+import com.example.jwtdemo.models.requests.trainingFilterRequest.TrainerTraining;
 import com.example.jwtdemo.services.training.TrainingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class TrainingController {
     private final TrainingService trainingService;
 
     @PostMapping
-    public ResponseEntity<?> createTraining(@RequestBody TrainingRegistrationRequest request){
+    public ResponseEntity<?> createTraining(@RequestBody TrainingRegistration request){
 
         trainingService.createTraining(request);
 
@@ -27,14 +27,14 @@ public class TrainingController {
     }
 
     @GetMapping("/trainee-trainings")
-    public ResponseEntity<List<TraineeTrainingDto>> getTraineeTrainingsList(@RequestBody TraineeTrainingRequest request){
+    public ResponseEntity<List<TraineeTrainingDto>> getTraineeTrainingsList(@RequestBody TraineeTraining request){
 
         var trainings = trainingService.getTraineeTrainings(request);
 
         return ResponseEntity.ok(trainings);
     }
     @GetMapping("/trainer-trainings")
-    public ResponseEntity<List<TrainerTrainingDto>> getTrainerTrainingsList(@RequestBody TrainerTrainingRequest request){
+    public ResponseEntity<List<TrainerTrainingDto>> getTrainerTrainingsList(@RequestBody TrainerTraining request){
 
         var trainings = trainingService.getTrainerTrainings(request);
 

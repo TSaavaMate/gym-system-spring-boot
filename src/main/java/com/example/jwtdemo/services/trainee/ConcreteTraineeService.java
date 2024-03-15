@@ -6,11 +6,11 @@ import com.example.jwtdemo.entities.User;
 import com.example.jwtdemo.exceptions.ResourceNotFoundException;
 import com.example.jwtdemo.models.dto.TraineeDto;
 import com.example.jwtdemo.models.profiles.TrainerProfile;
-import com.example.jwtdemo.models.requests.patchRequest.PatchTraineeRequest;
-import com.example.jwtdemo.models.requests.registrationRequest.RegistrationRequest;
-import com.example.jwtdemo.models.requests.registrationRequest.TraineeRegistrationRequest;
-import com.example.jwtdemo.models.requests.updateRequest.UpdateTraineeRequest;
-import com.example.jwtdemo.models.requests.updateRequest.UpdateTraineeTrainersRequest;
+import com.example.jwtdemo.models.requests.patchRequest.PatchTrainee;
+import com.example.jwtdemo.models.requests.registrationRequest.Registration;
+import com.example.jwtdemo.models.requests.registrationRequest.TraineeRegistration;
+import com.example.jwtdemo.models.requests.updateRequest.UpdateTrainee;
+import com.example.jwtdemo.models.requests.updateRequest.UpdateTraineeTrainers;
 import com.example.jwtdemo.models.responses.RegistrationResponse;
 import com.example.jwtdemo.repositories.TraineeRepository;
 import com.example.jwtdemo.services.trainee.mapper.TraineeDtoMapper;
@@ -73,7 +73,7 @@ public class ConcreteTraineeService implements TraineeService {
     }
 
     @Override
-    public void setActiveState(PatchTraineeRequest request) {
+    public void setActiveState(PatchTrainee request) {
         var trainee = traineeRepository.findTraineeByUserUsername(request.getUsername())
                 .orElseThrow(ResourceNotFoundException::new);
 
@@ -86,7 +86,7 @@ public class ConcreteTraineeService implements TraineeService {
     @Override
     @Loggable
     @Transactional
-    public TraineeDto update(@Validated UpdateTraineeRequest request) {
+    public TraineeDto update(@Validated UpdateTrainee request) {
         var trainee = traineeRepository.findTraineeByUserUsername(request.getUsername())
                 .orElseThrow(() -> {
                     log.warn("Not found trainee with username: {}", request.getUsername());
@@ -121,7 +121,7 @@ public class ConcreteTraineeService implements TraineeService {
     }
 
     @Override
-    public List<TrainerProfile> updateTraineeTrainers(UpdateTraineeTrainersRequest request) {
+    public List<TrainerProfile> updateTraineeTrainers(UpdateTraineeTrainers request) {
         var username = request.getTraineeUsername();
         var trainee = traineeRepository.findTraineeByUserUsername(username)
                 .orElseThrow(() -> {
@@ -136,8 +136,8 @@ public class ConcreteTraineeService implements TraineeService {
     }
 
     @Override
-    public RegistrationResponse create(RegistrationRequest request) {
-        var trainee = requestMapper.apply((TraineeRegistrationRequest) request);
+    public RegistrationResponse create(Registration request) {
+        var trainee = requestMapper.apply((TraineeRegistration) request);
         traineeRepository.save(trainee);
         return RegistrationResponse.builder()
                 .username(trainee.getUser().getUsername())

@@ -2,22 +2,18 @@ package com.example.jwtdemo.models.requests.updateRequest;
 
 import lombok.*;
 
-
-import java.sql.Date;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UpdateTraineeRequest {
-    @NonNull 
+public class UpdateTrainer {
+    @NonNull
     private String username;
     @NonNull
     private String firstname;
     @NonNull
     private String lastname;
-    private Date date_of_birth;
-    private String address;
+    private String specialization;
     @NonNull
     private Boolean isActive;
 }

@@ -1,6 +1,6 @@
 package com.example.jwtdemo.models.requests.registrationRequest;
 
-public interface  RegistrationRequest {
+public interface Registration {
     String getFirstname();
     String getLastname();
 }

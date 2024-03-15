@@ -4,7 +4,7 @@ import com.example.jwtdemo.entities.Trainee;
 import com.example.jwtdemo.entities.User;
 import com.example.jwtdemo.exceptions.ResourceNotFoundException;
 import com.example.jwtdemo.models.dto.TraineeDto;
-import com.example.jwtdemo.models.requests.patchRequest.PatchTraineeRequest;
+import com.example.jwtdemo.models.requests.patchRequest.PatchTrainee;
 import com.example.jwtdemo.repositories.TraineeRepository;
 import com.example.jwtdemo.services.trainee.ConcreteTraineeService;
 import com.example.jwtdemo.services.trainee.mapper.TraineeDtoMapper;
@@ -96,7 +96,7 @@ class ConcreteTraineeServiceTest {
     @Test
     void testSetActiveState() {
         String username = "testUser";
-        PatchTraineeRequest request = new PatchTraineeRequest();
+        PatchTrainee request = new PatchTrainee();
         request.setUsername(username);
         request.setIsActive(true);
 

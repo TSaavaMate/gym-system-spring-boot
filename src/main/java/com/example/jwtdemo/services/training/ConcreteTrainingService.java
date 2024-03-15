@@ -6,9 +6,9 @@ import com.example.jwtdemo.exceptions.InvalidTrainingCreationRequest;
 import com.example.jwtdemo.exceptions.ResourceNotFoundException;
 import com.example.jwtdemo.models.dto.TraineeTrainingDto;
 import com.example.jwtdemo.models.dto.TrainerTrainingDto;
-import com.example.jwtdemo.models.requests.registrationRequest.TrainingRegistrationRequest;
-import com.example.jwtdemo.models.requests.trainingFilterRequest.TraineeTrainingRequest;
-import com.example.jwtdemo.models.requests.trainingFilterRequest.TrainerTrainingRequest;
+import com.example.jwtdemo.models.requests.registrationRequest.TrainingRegistration;
+import com.example.jwtdemo.models.requests.trainingFilterRequest.TraineeTraining;
+import com.example.jwtdemo.models.requests.trainingFilterRequest.TrainerTraining;
 import com.example.jwtdemo.repositories.TraineeRepository;
 import com.example.jwtdemo.repositories.TrainerRepository;
 import com.example.jwtdemo.repositories.TrainingRepository;
@@ -35,7 +35,7 @@ public class ConcreteTrainingService implements TrainingService {
 
 
     @Override
-    public List<TraineeTrainingDto> getTraineeTrainings(TraineeTrainingRequest request) {
+    public List<TraineeTrainingDto> getTraineeTrainings(TraineeTraining request) {
 
         var trainings = trainingRepository.findTraineeTraining(
                 request.getUsername(),
@@ -51,7 +51,7 @@ public class ConcreteTrainingService implements TrainingService {
     }
 
     @Override
-    public List<TrainerTrainingDto> getTrainerTrainings(TrainerTrainingRequest request) {
+    public List<TrainerTrainingDto> getTrainerTrainings(TrainerTraining request) {
         var trainings = trainingRepository.findTrainerTraining(
                 request.getUsername(),
                 request.getPeriodFrom(),
@@ -67,7 +67,7 @@ public class ConcreteTrainingService implements TrainingService {
     @Override
     @Transactional
     @Loggable
-    public void createTraining(TrainingRegistrationRequest request) {
+    public void createTraining(TrainingRegistration request) {
         var trainee = traineeRepository.findTraineeByUserUsername(request.getTraineeUsername())
                 .orElseThrow(() -> new ResourceNotFoundException("not found trainee : cannot create training without trainee"));
 

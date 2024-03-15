@@ -2,9 +2,9 @@ package com.example.jwtdemo.services;
 
 import com.example.jwtdemo.auth.AuthenticateService;
 import com.example.jwtdemo.entities.User;
-import com.example.jwtdemo.models.requests.authRequest.AuthenticationRequest;
-import com.example.jwtdemo.models.requests.authRequest.ChangePasswordRequest;
-import com.example.jwtdemo.models.requests.registrationRequest.UserRegistrationRequest;
+import com.example.jwtdemo.models.requests.authRequest.Authentication;
+import com.example.jwtdemo.models.requests.authRequest.ChangePassword;
+import com.example.jwtdemo.models.requests.registrationRequest.UserRegistration;
 import com.example.jwtdemo.models.responses.AuthenticationResponse;
 import com.example.jwtdemo.repositories.UserRepository;
 import com.example.jwtdemo.config.JwtTokenService;
@@ -47,7 +47,7 @@ public class AuthServiceTest {
     @Test
     public void testRegister() {
 
-        UserRegistrationRequest request = UserRegistrationRequest
+        UserRegistration request = UserRegistration
                 .builder()
                 .firstname("firstname")
                 .lastname("lastname")
@@ -80,7 +80,7 @@ public class AuthServiceTest {
     @Test
     public void testAuthenticate() {
 
-        AuthenticationRequest request =AuthenticationRequest.builder()
+        Authentication request = Authentication.builder()
                 .email("domain@gmail.com")
                 .password("pass")
                 .build();
@@ -103,7 +103,7 @@ public class AuthServiceTest {
     @Test
     public void testChangePasswordAndAuthenticate() {
 
-        ChangePasswordRequest request = ChangePasswordRequest.builder()
+        ChangePassword request = ChangePassword.builder()
                 .email("email")
                 .oldPassword("old")
                 .newPassword("new")
