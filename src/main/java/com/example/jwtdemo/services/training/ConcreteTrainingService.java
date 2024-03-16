@@ -32,8 +32,6 @@ public class ConcreteTrainingService implements TrainingService {
     private final TraineeTrainingDtoMapper traineeTrainingMapper;
 
     private final TrainerTrainingDtoMapper trainerTrainingDtoMapper;
-
-
     @Override
     public List<TraineeTrainingDto> getTraineeTrainings(TraineeTraining request) {
 

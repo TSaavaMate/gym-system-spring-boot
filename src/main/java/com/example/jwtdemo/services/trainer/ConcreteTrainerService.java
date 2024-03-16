@@ -13,12 +13,13 @@ import com.example.jwtdemo.models.requests.trainerFilterRequest.ActiveTrainers;
 import com.example.jwtdemo.models.requests.updateRequest.UpdateTrainer;
 import com.example.jwtdemo.models.responses.RegistrationResponse;
 import com.example.jwtdemo.repositories.TrainerRepository;
+import com.example.jwtdemo.repositories.UserRepository;
 import com.example.jwtdemo.services.trainer.mapper.TrainerDtoMapper;
 import com.example.jwtdemo.services.trainer.mapper.TrainerProfileMapper;
-import com.example.jwtdemo.services.trainer.mapper.TrainerRequestMapper;
 import com.example.jwtdemo.services.trainer.trainerTraining.TrainerTrainingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -26,6 +27,7 @@ import org.springframework.validation.annotation.Validated;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +35,7 @@ import java.util.Optional;
 public class ConcreteTrainerService implements TrainerService{
 
     private final TrainerRepository trainerRepository;
-    private final TrainerRequestMapper requestMapper;
+    private final TrainerRequestValidator requestMapper;
     private final TrainerDtoMapper dtoMapper;
     private final TrainerProfileMapper profileMapper;
 
@@ -135,4 +137,15 @@ public class ConcreteTrainerService implements TrainerService{
     }
 
 
+    @Component
+    @RequiredArgsConstructor
+    public static class TrainerRequestValidator implements Function<TrainerRegistration, Trainer> {
+        private final UserRepository userRepository;
+        @Override
+        public Trainer apply(TrainerRegistration request) {
+            var user = userRepository.findByFirstNameAndLastName(request.getFirstname(), request.getLastname())
+                    .orElseThrow(ResourceNotFoundException::new);
+            return new Trainer(user,request.getSpecialization());
+        }
+    }
 }

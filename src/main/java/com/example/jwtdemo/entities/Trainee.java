@@ -5,11 +5,11 @@ import lombok.*;
 
 import java.util.Date;
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class Trainee extends Person{
     public Trainee(@NonNull Date dateOfBirth, @NonNull String address, User user) {
         this.dateOfBirth = dateOfBirth;

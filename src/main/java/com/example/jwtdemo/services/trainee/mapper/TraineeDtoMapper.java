@@ -3,18 +3,15 @@ package com.example.jwtdemo.services.trainee.mapper;
 import com.example.jwtdemo.entities.Trainee;
 import com.example.jwtdemo.models.dto.TraineeDto;
 import com.example.jwtdemo.services.DtoMapper;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.ReportingPolicy;
 
-@Component
-public class TraineeDtoMapper implements DtoMapper<Trainee, TraineeDto> {
-    @Override
-    public TraineeDto apply(Trainee trainee) {
-        return TraineeDto.builder()
-                .firstname(trainee.getUser().getFirstName())
-                .lastname(trainee.getUser().getLastName())
-                .address(trainee.getAddress())
-                .dateOfBirth(trainee.getDateOfBirth())
-                .isActive(trainee.getUser().getIsActive())
-                .build();
-    }
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
+public interface TraineeDtoMapper extends DtoMapper<Trainee, TraineeDto> {
+    @Mapping(source = "user.firstName",target = "firstname")
+    @Mapping(source = "user.lastName",target = "lastname")
+    @Mapping(source = "user.isActive",target = "isActive")
+    TraineeDto apply(Trainee trainee) ;
 }

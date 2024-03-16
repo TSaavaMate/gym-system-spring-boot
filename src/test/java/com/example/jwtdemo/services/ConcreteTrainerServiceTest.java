@@ -7,7 +7,6 @@ import com.example.jwtdemo.models.requests.patchRequest.PatchTrainer;
 import com.example.jwtdemo.repositories.TrainerRepository;
 import com.example.jwtdemo.services.trainer.ConcreteTrainerService;
 import com.example.jwtdemo.services.trainer.mapper.TrainerDtoMapper;
-import com.example.jwtdemo.services.trainer.mapper.TrainerRequestMapper;
 import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +28,7 @@ class ConcreteTrainerServiceTest {
     private TrainerRepository trainerRepository;
 
     @Mock
-    private TrainerRequestMapper requestMapper;
+    private ConcreteTrainerService.TrainerRequestValidator requestMapper;
 
     @Mock
     private TrainerDtoMapper dtoMapper;
